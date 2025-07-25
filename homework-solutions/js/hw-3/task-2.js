@@ -4,6 +4,7 @@
 n + nn + nnn, где n не перемножаются, а конкатенируются
 
 */
+let number = 9;
 console.log(
     number + (number*10+number) + (number*100+number*10+number)
 );
