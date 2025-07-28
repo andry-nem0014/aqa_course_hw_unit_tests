@@ -4,3 +4,7 @@
 n + nn + nnn, где n не перемножаются, а конкатенируются
 
 */
+let num = 9;
+console.log(
+    num + Number(" " + num + num) + Number(" " + num + num + num)
+);
