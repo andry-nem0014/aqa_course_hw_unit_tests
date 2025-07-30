@@ -9,13 +9,13 @@
 
   let minAge = 18;
   let maxAge = 60;
-  let age = '105';
+  let age = 'asdasd';
 
   switch (typeof age) {
       case 'string':
         if (!Number(age)){
           console.log('Incorrect data type')
-          return
+          break
         } else {
           Number(age)
         }
@@ -29,11 +29,11 @@
           } else {
             console.log("Technical work")
           };
-        return;
+        break;
       default:
         console.log("Incorrect data type")
       }
 
-
+//TODO: избежать использования console.log("Incorrect data type") дважды
   
   
