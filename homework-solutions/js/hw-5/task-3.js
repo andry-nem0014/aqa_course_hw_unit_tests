@@ -10,7 +10,7 @@ let sumVowels = 0;
 let sumConsonants = 0;
 let vowelsAndConsonantsResult = '';
 
-for (i = 0; i < word.length; i++) {
+for (let i = 0; i < word.length; i++) {
     if (vowels.includes(word[i])) {
         sumVowels++
     } else {
