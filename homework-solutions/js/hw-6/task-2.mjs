@@ -23,10 +23,8 @@ const myPizzasT2 = ['Peperoni', 'Caprichosa', 'Diablo', '4 cheeses', 'hawai'];
 const allPizzas = [myPizzasT1, myPizzasT2]
 
 const lowerCasePizzas = []
-let i = 0
 for (const pizza of competitorPizzas) {
-  lowerCasePizzas[i] = pizza.toLowerCase()
-  i++
+  lowerCasePizzas.push(pizza.toLowerCase());
 }
 
 for (const pizzas of allPizzas) {
