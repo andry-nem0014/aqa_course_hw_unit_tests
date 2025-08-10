@@ -5,8 +5,13 @@
   - Например: mergeArrays([1,2], [3,4], [5,6]) // [1,2,3,4,5,6]
   - Решить с использованием Spread operator
 */
-function mergeArrays() {
+function mergeArrays(...arrArrays) {
   // Ваш код
+  let resultArray = [] 
+  for ( const array of arrArrays) {
+    resultArray.push(...array)
+  }
+  return resultArray
 }
 /*
   2. Devide by _
@@ -16,7 +21,28 @@ function mergeArrays() {
   */
 function devideBy(sentence) {
   // Ваш код
+  
+  const arr = sentence.split(' ')
+  const cleanArr = []
+  const resuultArray = [];
+  
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i]) {
+    cleanArr.push(arr[i])
+    }
+  }
+
+  for (const str of cleanArr) {
+    if (cleanArr.indexOf(str) === 0) {
+      resuultArray.push(str.toLowerCase())
+    } else {
+      resuultArray.push(str[0].toUpperCase() + str.slice(1).toLowerCase())
+    }
+  }
+
+  return resuultArray.join('_')
 }
+
 /*
   3. Фибаначчи
     - Напишите функцию fibonacci(n), возвращающую энное число Фибоначчи
@@ -26,7 +52,20 @@ function devideBy(sentence) {
     - Например fibonacci(8) //21
   */
 function fibonacci(n) {
-  // Ваш код
+  const fib = [0, 1]
+  let num = 0
+
+  for (let i = 1; i <= n; i++) {
+    if (i <= 0) num = 0
+    if (i === 1 || i === 2) {
+      num = 1
+    } else {
+    fib.push(num)
+    num = fib[i - 2] + num
+    }
+  }
+  return num  
 }
+
 
 export { mergeArrays, fibonacci, devideBy };

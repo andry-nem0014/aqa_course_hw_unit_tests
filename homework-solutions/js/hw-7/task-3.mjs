@@ -10,6 +10,22 @@
 
 function digitalRoot(number) {
   // Ваш код
+const numberArrString = String(number).split('')
+const numberArrNumber = []
+
+for (const num of numberArrString) {
+  numberArrNumber.push(Number(num))
 }
+
+let sumNumber = 0
+for (const num of numberArrNumber) {
+    sumNumber += num
+}
+
+
+if (sumNumber <= 9 ) return sumNumber
+return digitalRoot(sumNumber)
+}
+
 
 export { digitalRoot };
