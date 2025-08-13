@@ -20,6 +20,14 @@ const words = [
 
 function sortedByVowels(wordsArr) {
   // Ваш код
+  const vowels = 'aeiouy'.split('')
+  
+    const sortedArr = wordsArr.toSorted((a, b) =>  
+    a.split('').filter(el => vowels.includes(el)).length - 
+    b.split('').filter(el => vowels.includes(el)).length
+    )
+
+    return sortedArr
 }
 
 export { sortedByVowels };
