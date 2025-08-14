@@ -8,6 +8,31 @@
 
 function findMissingNumber(numbers) {
   // Ваш код
+  
+  let stopSum = false
+  const sortArr = [...numbers].toSorted((a,b) => a - b)
+  console.log(sortArr)
+  const num = sortArr.reduce(
+  (result, element, index, array) => {
+    if (stopSum) return result
+
+    if (array[0] !== 1 && !stopSum ) {
+      stopSum = true
+      return 1
+    }
+    
+    if (element - array[index-1] > 1 ) {
+      stopSum = true
+      return array[index-1] + 1
+    }
+
+    if (index === array.length - 1 && !stopSum) {
+      result = array.length + 1
+      return result
+    }
+  } , 0
+  )
+  return num
 }
 
 export { findMissingNumber };
