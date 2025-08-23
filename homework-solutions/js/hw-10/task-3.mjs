@@ -20,7 +20,22 @@ function getRandomArbitrary(min, max) {
 }
 
 function uniqueRandomGenerator(n) {
-  // Ваш код
+  const arrIntNum = [];
+  return () => {
+    if (arrIntNum.length === n || !n) return 'All numbers were received';
+  
+    let randNum;
+    let isDuble = true;
+
+    while (isDuble) {
+      randNum = parseInt(getRandomArbitrary(1, n + 1))
+      isDuble = arrIntNum.find((el) => el === randNum)
+    }
+    
+    arrIntNum.push(randNum);
+    //console.log('Массив:', arrIntNum, 'Сгенерировано:', randNum);
+    return randNum
+  };
 }
 
 export { uniqueRandomGenerator };
