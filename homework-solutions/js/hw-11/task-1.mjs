@@ -101,7 +101,6 @@ class Company {
   }
 }
 
-
 const company = new Company('Tech Corp', 123456, 'Main Street');
 console.log(company)
 const emp1 = new Employee('John', 'Doe', 'Developer', 3000);
