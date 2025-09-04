@@ -24,83 +24,67 @@
             Album name 2 (100 photos)
 */
 
-const baseUrl = "https://jsonplaceholder.typicode.com"
+const listUserUrl = "https://jsonplaceholder.typicode.com/users"
+const listAlbumsUrl = "https://jsonplaceholder.typicode.com/albums"
+const listPhotoUrl = "https://jsonplaceholder.typicode.com/photos"
 
-async function getUserList() {
-    try {
-        const responseUserList = await fetch(baseUrl + "/users")
-        if (!responseUserList.ok) throw new Error(`HTTP error! status: ${responseUserList.status}`);
-        const body = await responseUserList.json();
+const arrayGetList = [
+    listUserUrl,
+    listAlbumsUrl,
+    listPhotoUrl
+]
+
+async function getDataFromApi(url) {
+  try {
+        const list = await fetch(url)
+        if (!list.ok) throw new Error(`HTTP error! status: ${list.status}`);
+        const body = await list.json();
         return body;
-    } catch(error) {
+  } catch(error) {
         console.error(error.message);
+        throw error;
+  }
+}
+
+function getDataBulk(...urls) {
+  const requests = urls.map(url => getDataFromApi(url));
+  return Promise.all(requests);
+}
+
+async function processingArrayList() {
+    try {
+        const [listUser, listAlbums, listPhoto] = await getDataBulk(...arrayGetList)
+        const arrayUserListCart = listUser
+            .map(userCart => {
+            
+            const arrayUserAlbum = listAlbums
+                .filter(albumCart => albumCart.userId === userCart.id )
+                .map(albumCart => {
+                    return {
+                    nameAlbum: albumCart.title,
+                    photoCount: listPhoto
+                        .filter(photo => albumCart.id === photo.albumId).length
+                    }
+                })
+            
+            return {
+                name: userCart.name,
+                email: userCart.email,
+                phone: userCart.phone,
+                company: userCart.company.name,
+                albums: arrayUserAlbum
+            }
+        })
+    
+    return arrayUserListCart
+    } catch (error) {
+        console.error('Ошибка обработки:', error);
         throw error;
     }
 }
 
-async function getAlbumsUser(userId) {
-    try {
-        const responseUserAlbum = await fetch(baseUrl + "/users/" + userId + "/albums")
-        if (!responseUserAlbum.ok) throw new Error(`HTTP error! status: ${responseUserAlbum.status}`);
-        const body = await responseUserAlbum.json();
-        return body;
-    } catch(error) {
-        console.error(error.message);
-    }  
-}
-
-async function getFotoCount(albumId) {
-    try {
-        const responseAllPhoto = await fetch(baseUrl + "/photos")
-        if (!responseAllPhoto.ok) throw new Error(`HTTP error! status: ${responseAllPhoto.status}`);
-        const body = await responseAllPhoto.json();
-        const arrayPhotoInAlbuum = body.filter(photoCart => photoCart.albumId === albumId)
-        const arrayPhotoInAlbuumLength = arrayPhotoInAlbuum.length
-        return arrayPhotoInAlbuumLength
-    } catch (error) {
-        console.error(error.message);
-    } 
-}
-
-async function getUserListWithAlbums() {
-    try {
-        const arrayUserList = await getUserList()
-        const resultUserList = await arrayUserList.reduce(async (result, userData) => {
-            const finalResult = await result
-            const userAlbums = await getAlbumsUser(userData.id)
-            const userAlbumsWithCount = await userAlbums.reduce(async (result, album) => {
-                const newResult = await result
-                const photoCount = await getFotoCount(album.id);
-                const albumCart = {
-                    nameAlbum: album.title,
-                    photoCount: photoCount
-                }
-                newResult.push(albumCart)
-                return newResult
-            }, Promise.resolve([]))
-
-            const userCart = {
-                name: userData.name,
-                email: userData.email,
-                phone: userData.phone,
-                company: userData.company.name,
-                albums: await userAlbumsWithCount
-            }
-            finalResult.push(userCart)
-            //console.log(userCart)
-            return finalResult
-        }, Promise.resolve([]))
-        return resultUserList
-        
-    } catch (error) {
-        console.error(error.message);
-    }
-}
-
-
-async function resultList() {
-    getUserListWithAlbums()
-        .then(array => array.forEach((userCart, index) => {
+processingArrayList()
+    .then(array => array.forEach((userCart, index) => {
             console.log(`${index+1}. name: ${userCart.name}`)
             console.log(`   email: ${userCart.email}`)
             console.log(`   phone: ${userCart.phone}`)
@@ -110,10 +94,5 @@ async function resultList() {
                 console.log(`     ${album.nameAlbum} (${album.photoCount} photos)`)
             })
             console.log('__________________________________\n')
-            
         }))
-        .catch(error => console.error(error))
-
-}
-
-resultList()
+    .catch(error => console.error(error))
