@@ -23,7 +23,7 @@ numbers = [1, 2, 3, 4, 5];
 let cities: string[]
 cities = ["Minsk", "Warsaw", "London"];
 
-const person = {
+const person: { name: string; age: number; city: string; } = {
     name: "Alice",
     age: 30,
     city: "Minsk"
@@ -102,7 +102,7 @@ type DiscountedProduct = {
   console.log(calculateDiscount(product)); // Ожидается: 900
 */
 
-function calculateDiscount(product:{id:number, name: string, price: number, discount: number}):number { 
+function calculateDiscount(product:DiscountedProduct):number { 
     return product.price*(100 - product.discount)/100
 }
 
