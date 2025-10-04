@@ -6,7 +6,7 @@ Task 2.
   Xpath: первый элемент с классом ‘txt’
     (//*[@class="txt"])[1]
   Xpath: кнопку которая содержит текст: ‘Remove comment’
-    //*[text()="Remove comment"]
+    //button[text()="Remove comment"]
   Xpath: первый элемент с классом ‘one’
     (//*[contains(@class, 'one')])[1]
   Xpath/CSS: элемент с атрибутом ‘multitag2’ и значением  ‘on’
